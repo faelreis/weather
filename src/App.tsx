@@ -14,7 +14,12 @@ function App() {
   })
 
   const [name, setName] = useState('')
-  const [error, setError] = useState('')
+
+  const handleKeyPress = (event)=>{
+    if (event.key === 'Enter') {
+      handleClick();
+    }
+  }
 
   const handleClick = ()=>{
     if(name !== ""){
@@ -48,7 +53,7 @@ function App() {
           if(err.response.status == 404){
             alert('Invalid city')
           } else{
-            alert('')
+            alert('Integration error')
           }
       })
     }
@@ -63,7 +68,7 @@ function App() {
       <div className='weather-app'>
               <div className="search">
                   <img src="../public/image/icon-place.svg" alt="Place icon" />
-                  <input type="text" onChange={e => setName (e.target.value)} />
+                  <input type="text" onChange={e => setName (e.target.value)} onKeyPress={handleKeyPress}/>
                   <button onClick={handleClick} className='btn-search'>
                     <img src="../public/image/icon-search.svg" alt="Search icon" />
                   </button>
