@@ -70,8 +70,8 @@ function App(): JSX.Element {
   };
 
   const currentDate = new Date();
-  const options = { day: 'numeric', month: 'long' };
-  const formattedDate = currentDate.toLocaleDateString('en-US', options);
+  const options:Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
+  const formattedDate:string = currentDate.toLocaleDateString('en-US', options);
 
   return (
     <div className='weather-app'>
