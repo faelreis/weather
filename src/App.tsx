@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
+import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -29,13 +29,28 @@ function App(): JSX.Element {
     }
   };
 
+  interface WeatherData {
+    weather: {
+      main: string;
+      description: string;
+    }[];
+    main: {
+      temp: number;
+      humidity: number;
+    };
+    wind: {
+      speed: number;
+    };
+    name: string;
+  }
+
   const handleClick = (): void => {
     if (name !== '') {
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=721ae6e20d02be9173692911575b24c2`;
       axios
-        .get(apiUrl)
+        .get<WeatherData>(apiUrl)
         .then((res) => {
-          let imgPath: string = '';
+          let imgPath = '';
           if (res.data.weather[0].main === 'Clear') {
             imgPath = '../public/image/sunny.svg';
           } else if (res.data.weather[0].main === 'Clouds') {
