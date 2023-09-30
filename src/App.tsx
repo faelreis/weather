@@ -6,8 +6,6 @@ import IconPlace from "./assets/icon-place.svg";
 import IconSearch from "./assets/icon-search.svg";
 import IconHum from "./assets/icon-hum.svg";
 import IconWind from "./assets/icon-wind.svg";
-import Sunny from "./assets/sunny.svg";
-import Cloudy from "./assets/cloudy.svg";
 
 interface City {
   name: string;
@@ -67,17 +65,17 @@ function App(): JSX.Element {
         .then((res) => {
           let imgPath = "";
           if (res.data.weather[0].main === "Clear") {
-            imgPath = "/src/assets/sunny.svg";
+            imgPath = "/public/sunny.svg";
           } else if (res.data.weather[0].main === "Clouds") {
-            imgPath = "/src/assets/cloudy.svg";
+            imgPath = "/public/cloudy.svg";
           } else if (res.data.weather[0].main === "Rain") {
-            imgPath = "/src/assets//rainy.svg";
+            imgPath = "/public/rainy.svg";
           } else if (res.data.weather[0].main === "Drizzle") {
-            imgPath = "/src/assets/foggy.svg";
+            imgPath = "/public/foggy.svg";
           } else if (res.data.weather[0].main === "Mist") {
-            imgPath = "/src/assets/stormy.svg";
+            imgPath = "/public/stormy.svg";
           } else {
-            imgPath = Cloudy;
+            imgPath = "/public/cloudy.svg";
           }
           setWeatherImage(imgPath);
           setCity({
