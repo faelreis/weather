@@ -1,6 +1,6 @@
-import { useState, ChangeEvent, KeyboardEvent } from 'react';
-import axios from 'axios';
-import './App.css';
+import { useState, ChangeEvent, KeyboardEvent } from "react";
+import axios from "axios";
+import "./App.css";
 
 interface City {
   name: string;
@@ -11,58 +11,64 @@ interface City {
   img: string;
 }
 
+interface MyError {
+  response: {
+    status: number;
+  };
+}
+
+interface WeatherData {
+  weather: {
+    main: string;
+    description: string;
+  }[];
+  main: {
+    temp: number;
+    humidity: number;
+  };
+  wind: {
+    speed: number;
+  };
+  name: string;
+}
+
 function App(): JSX.Element {
   const [city, setCity] = useState<City>({
-    name: 'Florianópolis',
+    name: "Florianópolis",
     celsius: 20,
     wind: 2,
     humidity: 3,
-    desc: 'Clima',
-    img: '../public/image/foggy.svg'
+    desc: "Clima",
+    img: "../public/image/foggy.svg",
   });
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleClick();
     }
   };
 
-  interface WeatherData {
-    weather: {
-      main: string;
-      description: string;
-    }[];
-    main: {
-      temp: number;
-      humidity: number;
-    };
-    wind: {
-      speed: number;
-    };
-    name: string;
-  }
-
   const handleClick = (): void => {
-    if (name !== '') {
+    if (name !== "") {
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=721ae6e20d02be9173692911575b24c2`;
       axios
         .get<WeatherData>(apiUrl)
         .then((res) => {
-          let imgPath = '';
-          if (res.data.weather[0].main === 'Clear') {
-            imgPath = '../public/image/sunny.svg';
-          } else if (res.data.weather[0].main === 'Clouds') {
-            imgPath = '../public/image/cloudy.svg';
-          } else if (res.data.weather[0].main === 'Rain') {
-            imgPath = '../public/image/rainy.svg';
-          } else if (res.data.weather[0].main === 'Drizzle') {
-            imgPath = '../public/image/foggy.svg';
-          } else if (res.data.weather[0].main === 'Mist') {
-            imgPath = '../public/image/stormy.svg';
+          let imgPath = "";
+          if (res.data.weather[0].main === "Clear") {
+            imgPath = "../public/image/sunny.svg";
+          } else if (res.data.weather[0].main === "Clouds") {
+            imgPath = "../public/image/cloudy.svg";
+          } else if (res.data.weather[0].main === "Rain") {
+            imgPath = "../public/image/rainy.svg";
+          } else if (res.data.weather[0].main === "Drizzle") {
+            imgPath = "../public/image/foggy.svg";
+          } else if (res.data.weather[0].main === "Mist") {
+            imgPath = "../public/image/stormy.svg";
           } else {
-            imgPath = '../public/image/clouds.svg';
+            imgPath = "../public/image/clouds.svg";
           }
           setCity({
             ...city,
@@ -74,52 +80,57 @@ function App(): JSX.Element {
             img: imgPath,
           });
         })
-        .catch((err) => {
+        .catch((err: MyError) => {
           if (err.response.status === 404) {
-            alert('Invalid city');
+            alert("Invalid city");
           } else {
-            alert('Integration error');
+            alert("Integration error");
           }
         });
     }
   };
 
   const currentDate = new Date();
-  const options:Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
-  const formattedDate:string = currentDate.toLocaleDateString('en-US', options);
+  const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
+  const formattedDate: string = currentDate.toLocaleDateString(
+    "en-US",
+    options
+  );
 
   return (
-    <div className='weather-app'>
-      <div className='search'>
-        <img src='../public/image/icon-place.svg' alt='Place icon' />
+    <div className="weather-app">
+      <div className="search">
+        <img src="../public/image/icon-place.svg" alt="Place icon" />
         <input
-          type='text'
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+          type="text"
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
           onKeyPress={handleKeyPress}
         />
-        <button onClick={handleClick} className='btn-search'>
-          <img src='../public/image/icon-search.svg' alt='Search icon' />
+        <button onClick={handleClick} className="btn-search">
+          <img src="../public/image/icon-search.svg" alt="Search icon" />
         </button>
       </div>
-      <div className='image'>
-        <img className='' src={city.img} alt='Illustration' />
+      <div className="image">
+        <img className="" src={city.img} alt="Illustration" />
       </div>
-      <main className='box-forecast'>
-        <h3 className='date'>Today, {formattedDate}</h3>
-        <h3 className='city'>{city.name}</h3>
-        <h1 id='celcius'>{Math.round(city.celsius)}°</h1>
+      <main className="box-forecast">
+        <h3 className="date">Today, {formattedDate}</h3>
+        <h3 className="city">{city.name}</h3>
+        <h1 id="celcius">{Math.round(city.celsius)}°</h1>
         <h2>{city.desc.charAt(0).toUpperCase() + city.desc.slice(1)}</h2>
-        <div className='wrapper-wind'>
-          <img src='../public/image/icon-wind.svg' alt='Wind icon' />
+        <div className="wrapper-wind">
+          <img src="../public/image/icon-wind.svg" alt="Wind icon" />
           <span>Wind</span>
-          <span className='divisor'>|</span>
-          <span className='velocity-wind'>{Math.round(city.wind)} km/h</span>
+          <span className="divisor">|</span>
+          <span className="velocity-wind">{Math.round(city.wind)} km/h</span>
         </div>
-        <div className='wrapper-hum'>
-          <img src='../public/image/icon-hum.svg' alt='Hum icon' />
+        <div className="wrapper-hum">
+          <img src="../public/image/icon-hum.svg" alt="Hum icon" />
           <span>Hum</span>
-          <span className='divisor'>|</span>
-          <span className='percentage-hum'>{Math.round(city.humidity)}%</span>
+          <span className="divisor">|</span>
+          <span className="percentage-hum">{Math.round(city.humidity)}%</span>
         </div>
       </main>
     </div>
