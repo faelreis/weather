@@ -65,17 +65,17 @@ function App(): JSX.Element {
         .then((res) => {
           let imgPath = "";
           if (res.data.weather[0].main === "Clear") {
-            imgPath = "/public/sunny.svg";
+            imgPath = "/sunny.svg";
           } else if (res.data.weather[0].main === "Clouds") {
-            imgPath = "/public/cloudy.svg";
+            imgPath = "/cloudy.svg";
           } else if (res.data.weather[0].main === "Rain") {
-            imgPath = "/public/rainy.svg";
+            imgPath = "/rainy.svg";
           } else if (res.data.weather[0].main === "Drizzle") {
-            imgPath = "/public/foggy.svg";
+            imgPath = "/foggy.svg";
           } else if (res.data.weather[0].main === "Mist") {
-            imgPath = "/public/stormy.svg";
+            imgPath = "/stormy.svg";
           } else {
-            imgPath = "/public/cloudy.svg";
+            imgPath = "/cloudy.svg";
           }
           setWeatherImage(imgPath);
           setCity({
