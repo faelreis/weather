@@ -2,6 +2,11 @@ import { useState, ChangeEvent, KeyboardEvent } from "react";
 import axios from "axios";
 import "./App.css";
 
+import IconPlace from "./assets/icon-place.svg";
+import IconSearch from "./assets/icon-search.svg";
+import IconHum from "./assets/icon-hum.svg";
+import IconWind from "./assets/icon-wind.svg";
+
 interface City {
   name: string;
   celsius: number;
@@ -39,10 +44,12 @@ function App(): JSX.Element {
     wind: 2,
     humidity: 3,
     desc: "Clima",
-    img: "../public/image/foggy.svg",
+    img: "./assets/foggy.svg",
   });
 
   const [name, setName] = useState("");
+
+  const [weatherImage, setWeatherImage] = useState("../public/image/sunny.svg");
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === "Enter") {
@@ -58,18 +65,19 @@ function App(): JSX.Element {
         .then((res) => {
           let imgPath = "";
           if (res.data.weather[0].main === "Clear") {
-            imgPath = "../public/image/sunny.svg";
+            imgPath = "/src/assets/sunny.svg";
           } else if (res.data.weather[0].main === "Clouds") {
-            imgPath = "../public/image/cloudy.svg";
+            imgPath = "/src/assets/cloudy.svg";
           } else if (res.data.weather[0].main === "Rain") {
-            imgPath = "../public/image/rainy.svg";
+            imgPath = "/src/assets//rainy.svg";
           } else if (res.data.weather[0].main === "Drizzle") {
-            imgPath = "../public/image/foggy.svg";
+            imgPath = "/src/assets/foggy.svg";
           } else if (res.data.weather[0].main === "Mist") {
-            imgPath = "../public/image/stormy.svg";
+            imgPath = "/src/assets/stormy.svg";
           } else {
-            imgPath = "../public/image/clouds.svg";
+            imgPath = "/src/assets/cloudy.svg";
           }
+          setWeatherImage(imgPath);
           setCity({
             ...city,
             celsius: res.data.main.temp,
@@ -100,7 +108,7 @@ function App(): JSX.Element {
   return (
     <div className="weather-app">
       <div className="search">
-        <img src="../public/image/icon-place.svg" alt="Place icon" />
+        <img src={IconPlace} alt="Place icon" />
         <input
           type="text"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -109,11 +117,11 @@ function App(): JSX.Element {
           onKeyPress={handleKeyPress}
         />
         <button onClick={handleClick} className="btn-search">
-          <img src="../public/image/icon-search.svg" alt="Search icon" />
+          <img src={IconSearch} alt="Search icon" />
         </button>
       </div>
       <div className="image">
-        <img className="" src={city.img} alt="Illustration" />
+        <img src={weatherImage} alt="Illustration" />
       </div>
       <main className="box-forecast">
         <h3 className="date">Today, {formattedDate}</h3>
@@ -121,13 +129,13 @@ function App(): JSX.Element {
         <h1 id="celcius">{Math.round(city.celsius)}°</h1>
         <h2>{city.desc.charAt(0).toUpperCase() + city.desc.slice(1)}</h2>
         <div className="wrapper-wind">
-          <img src="../public/image/icon-wind.svg" alt="Wind icon" />
+          <img src={IconWind} alt="Wind icon" />
           <span>Wind</span>
           <span className="divisor">|</span>
           <span className="velocity-wind">{Math.round(city.wind)} km/h</span>
         </div>
         <div className="wrapper-hum">
-          <img src="../public/image/icon-hum.svg" alt="Hum icon" />
+          <img src={IconHum} alt="Hum icon" />
           <span>Hum</span>
           <span className="divisor">|</span>
           <span className="percentage-hum">{Math.round(city.humidity)}%</span>
