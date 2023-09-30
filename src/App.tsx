@@ -6,6 +6,8 @@ import IconPlace from "./assets/icon-place.svg";
 import IconSearch from "./assets/icon-search.svg";
 import IconHum from "./assets/icon-hum.svg";
 import IconWind from "./assets/icon-wind.svg";
+import Sunny from "./assets/sunny.svg";
+import Cloudy from "./assets/cloudy.svg";
 
 interface City {
   name: string;
@@ -75,7 +77,7 @@ function App(): JSX.Element {
           } else if (res.data.weather[0].main === "Mist") {
             imgPath = "/src/assets/stormy.svg";
           } else {
-            imgPath = "/src/assets/cloudy.svg";
+            imgPath = Cloudy;
           }
           setWeatherImage(imgPath);
           setCity({
