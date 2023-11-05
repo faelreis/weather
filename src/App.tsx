@@ -63,7 +63,7 @@ function App(): JSX.Element {
       axios
         .get<WeatherData>(apiUrl)
         .then((res) => {
-          let imgPath = "";
+          let imgPath = "/cloudy.svg";
           if (res.data.weather[0].main === "Clear") {
             imgPath = "/sunny.svg";
           } else if (res.data.weather[0].main === "Clouds") {
@@ -121,7 +121,7 @@ function App(): JSX.Element {
         </button>
       </div>
       <div className="image">
-        <img src={weatherImage} alt="Illustration" />
+        <img src={weatherImage} alt="Enter your location" />
       </div>
       <main className="box-forecast">
         <h3 className="date">Today, {formattedDate}</h3>
